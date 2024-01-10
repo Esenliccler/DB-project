@@ -30,3 +30,21 @@ class DBfuncs:
         cur.execute("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)", (surname, name, address, postcode, username, password))
         con.commit()
         con.close()
+
+    #Restaurant registration to the DB
+    def registerRestaurant(res_name, address, postcode, password, img_path = None):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        print("Connected to Database")
+        sqlite_insert_blob_query = """ INSERT INTO Restaurants
+                                  (res_name, address, postcode, password, picture) VALUES (?, ?, ?, ?, ?)"""
+        data_tuple = (res_name, address, postcode, password, img_path)
+        cur.execute(sqlite_insert_blob_query, data_tuple)
+        con.commit()
+        con.close()
+
+# if __name__ == "__main__":
+#     DBfuncs.createTables()
+#     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
+#     DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321, "C:/Users/KaradenizNB/Desktop/abc.png")
+#     DBfuncs.registerRestaurant("Al-Basha3", "ABC 7", 47055, 123321)
