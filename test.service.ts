@@ -1,1 +1,0 @@
-const fadi = 10;

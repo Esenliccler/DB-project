@@ -1,0 +1,18 @@
+Frontend : Angular
+	   Typescript
+	   HTML
+	   SCSS
+
+Server:    Flask
+
+Backend :  Python/SQLite
+
+Assets : images/icons/static_data
+Environments : files connected with Backend
+App : auth : account creation and login
+    : shared : storing reusable components for multi use
+    : content : application pages : enter email address
+				  : home (restaurants overview)
+				  : restaurant menu
+				  : cart
+				  : order status
