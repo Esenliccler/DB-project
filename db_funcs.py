@@ -22,3 +22,11 @@ class DBfuncs:
             )""")
         con.commit()
         con.close()
+
+    #Customer registration to the DB
+    def registerCustomer(surname, name, address, postcode, username, password):
+        con = sql.connect('database.db')
+        cur = con.cursor()
+        cur.execute("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)", (surname, name, address, postcode, username, password))
+        con.commit()
+        con.close()
