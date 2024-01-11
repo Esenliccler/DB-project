@@ -1,0 +1,94 @@
+/* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #188ac0;
+  --primary-bg: #188ac033;
+
+  --secondary: #100db1;
+  --secondary-bg: #100db133;
+  --secondary-bg-light: #f1f1f5;
+
+  --accent: #7366ff;
+  --accent-bg: #7366ff33;
+  --accent-light: #cbc6ff;
+
+  --C-grey: #ccc;
+  --D-grey: #ddd;
+  --EA-grey: #eaedef;
+  --A3-grey: #a3a3a3;
+  --D3-grey: #d3d3d3;
+  --DF-grey: #dfdfdf;
+  --5A-grey: #5a5a5a;
+  --75-grey: #757589;
+  --89-grey: #898989;
+  --A7-grey: #a7a8ac;
+  --A8-grey: #a8a9ad;
+  --9-grey: #999;
+  --grey-text: #2f2f3b;
+  --app-background: #f4f9ff;
+
+  --3-black: #333333;
+  --4-black: #444444;
+  --2C-black: #2c323f;
+  --19-black: #191919;
+  --dark-text: #262932;
+  --semi-dark: #59667a;
+  --blue-black: #0c5b7e;
+
+  --F3-white: #f3f3f3;
+  --F9-white: #f9f9fa;
+  --EA-white: #eaeaea;
+  --F1-white: #f1f1f1;
+  --FE-white: #fefefe;
+  --F-white: #fff;
+
+  --red: #f85d5d;
+  --red-dark: #df0f34;
+  --red-bg: #f85d5d33;
+  --red-light-bg: #dd999933;
+
+  --green: #3ec764;
+  --green-bg: #3ec76433;
+  --green-crystal: #26e7a6;
+
+  --yellow: #feca57;
+  --yellow-bg: #feca5725;
+  --light-yellow: #ecf01c;
+  --light-yellow-bg: #ecf01c20;
+
+  --male-blue: #4680ff;
+  --male-blue-bg: #4680ff33;
+
+  --female-pink: #e741ae;
+  --female-pink-bg: #e741ae33;
+
+  --deep-dark-blue: #2e2f47;
+  --dark: #262932;
+  --dark-separator: #374558;
+
+  --cyan: #16c7f9;
+  --cyan-bg: #16c7f933;
+
+  --lime: #91cc75;
+  --lime-bg: #91cc7533;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  height: 100vh;
+  width: 100vw !important;
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--app-background);
+  display: block;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 0px;
+  background-color: var(--app-background);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--primary) !important;
+}

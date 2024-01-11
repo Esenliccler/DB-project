@@ -1,0 +1,82 @@
+<div class="login-page-container d-flex">
+  <div
+    class="login-card d-flex flex-column justify-content-center align-items-center"
+  >
+    <!-- LOGO -->
+    <div>
+      <a class="logo" routerLink="/">
+        <img
+          class="img-fluid for-light"
+          src="assets/images/logo/najeeb-losdago.png"
+          alt="login page"
+          defer
+        />
+      </a>
+    </div>
+
+    <!-- FORM CARD -->
+    <form
+      class="login-main flex-1 d-flex flex-column justify-content-evenly"
+      [formGroup]="loginForm"
+    >
+      <!-- TITLE -->
+      <h4>Sign in to your account</h4>
+      <p>Enter your email & password</p>
+
+      <!-- EMAIL INPUTgit  -->
+      <div class="form-group">
+        <label for="email" class="col-form-label">Email Address</label>
+        <input
+          class="form-control"
+          type="email"
+          id="email"
+          placeholder="email@domain"
+          formControlName="email"
+        />
+      </div>
+
+      <!-- PASSWORD INPUT -->
+      <div class="form-group">
+        <label for="password" class="col-form-label">Password</label>
+        <span class="p-input-icon-right">
+          <i
+            *ngIf="!show"
+            class="pi pi-eye"
+            (click)="showPassword()"
+            role="button"
+          ></i>
+          <i
+            *ngIf="show"
+            class="pi pi-eye-slash"
+            (click)="showPassword()"
+            role="button"
+          ></i>
+          <input
+            class="form-control"
+            [type]="show ? 'text' : 'password'"
+            pInputText
+            formControlName="password"
+            id="password"
+            placeholder="*********"
+          />
+        </span>
+      </div>
+
+      <a [routerLink]="['/sign-up']" routerLinkActive="router-link-active">
+        <small>New user? Register now!</small>
+      </a>
+
+      <!-- LOGIN BUTTON -->
+      <div class="form-group mt-3">
+          <button
+            class="btn btn-primary d-block w-100 blue-bg"
+            [disabled]="!loginForm.valid"
+            (click)="login()"
+            type="button"
+          >
+            <span>Login</span>
+          </button>
+      </div>
+    </form>
+  </div>
+</div>
