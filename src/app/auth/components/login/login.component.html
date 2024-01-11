@@ -2,18 +2,6 @@
   <div
     class="login-card d-flex flex-column justify-content-center align-items-center"
   >
-    <!-- LOGO -->
-    <div>
-      <a class="logo" routerLink="/">
-        <img
-          class="img-fluid for-light"
-          src="assets/images/logo/najeeb-losdago.png"
-          alt="login page"
-          defer
-        />
-      </a>
-    </div>
-
     <!-- FORM CARD -->
     <form
       class="login-main flex-1 d-flex flex-column justify-content-evenly"
@@ -63,20 +51,33 @@
       </div>
 
       <a [routerLink]="['/sign-up']" routerLinkActive="router-link-active">
-        <small>New user? Register now!</small>
+        <span class = "register-link">New user? Register now!</span>
       </a>
 
       <!-- LOGIN BUTTON -->
       <div class="form-group mt-3">
-          <button
-            class="btn btn-primary d-block w-100 blue-bg"
-            [disabled]="!loginForm.valid"
-            (click)="login()"
-            type="button"
-          >
-            <span>Login</span>
-          </button>
+        <button
+          class="btn btn-primary d-block w-100 blue-bg"
+          [disabled]="!loginForm.valid"
+          (click)="login()"
+          type="button"
+        >
+          <span>Login</span>
+        </button>
       </div>
     </form>
+  </div>
+
+  <!-- LOGO -->
+
+  <div>
+    <a class="logo" routerLink="/">
+      <img
+        class="img-fluid for-light"
+        src="assets/logo.png"
+        alt="login page"
+        defer
+      />
+    </a>
   </div>
 </div>
