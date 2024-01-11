@@ -30,7 +30,7 @@ class DBfuncs:
         cur.execute("SELECT EXISTS (SELECT * FROM customers WHERE username=?)", (username,))
         result = cur.fetchone()[0]
         if bool(result):
-            raise ValueError("Username already exists. Please choose a different username.")
+            print("Username already exists. Please choose a different username.")
         else:
             cur.execute("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)", (surname, name, address, postcode, username, password))
         con.commit()
@@ -40,10 +40,15 @@ class DBfuncs:
     def registerRestaurant(res_name, address, postcode, password, img_path = None):
         con = sql.connect('database.db')
         cur = con.cursor()
-        sqlite_insert_blob_query = """ INSERT INTO Restaurants
+        sqlite_insert_blob_query = """ INSERT INTO restaurants
                                   (res_name, address, postcode, password, picture) VALUES (?, ?, ?, ?, ?)"""
         data_tuple = (res_name, address, postcode, password, img_path)
-        cur.execute(sqlite_insert_blob_query, data_tuple)
+        cur.execute("SELECT EXISTS (SELECT * FROM restaurants WHERE res_name=?)", (res_name,))
+        result = cur.fetchone()[0]
+        if bool(result):
+            print("Restaurant name already exists. Please choose a different name.")
+        else:
+            cur.execute(sqlite_insert_blob_query, data_tuple)
         con.commit()
         con.close()
 
@@ -57,13 +62,13 @@ class DBfuncs:
 
             
 
-# if __name__ == "__main__":
-#     DBfuncs.createTables()
+if __name__ == "__main__":
+      DBfuncs.createTables()
 #     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
 #     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz1", 1234554321)
 #     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
-    # DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321, "C:/Users/KaradenizNB/Desktop/abc.png")
-    # DBfuncs.registerRestaurant("Al-Basha3", "ABC 7", 47055, 123321)
-    # print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554321))
-    # print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554322))
-    # print(DBfuncs.loginCustomerCheck('Utku', 1234554321))
+      DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321, "C:/Users/KaradenizNB/Desktop/abc.png")
+      DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321)
+#     print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554321))
+#     print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554322))
+#     print(DBfuncs.loginCustomerCheck('Utku', 1234554321))
