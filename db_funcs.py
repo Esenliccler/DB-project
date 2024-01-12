@@ -27,14 +27,17 @@ class DBfuncs:
     def registerCustomer(surname, name, address, postcode, username, password):
         con = sql.connect('database.db')
         cur = con.cursor()
+        response = False
         cur.execute("SELECT EXISTS (SELECT * FROM customers WHERE username=?)", (username,))
         result = cur.fetchone()[0]
-        if bool(result):
-            print("Username already exists. Please choose a different username.")
-        else:
+        if not bool(result):
             cur.execute("INSERT INTO customers VALUES (?, ?, ?, ?, ?, ?)", (surname, name, address, postcode, username, password))
+            response = True
         con.commit()
         con.close()
+        return response
+
+        
 
     #Restaurant registration to the DB
     def registerRestaurant(res_name, address, postcode, password, img_path = None):
