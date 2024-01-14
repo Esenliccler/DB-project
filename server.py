@@ -3,10 +3,6 @@ from db_funcs import *
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return "Welcome to the Flask App!" # will be replaced by home page 
-
 #function/route to register customer
 @app.route('/register_customer', methods=['POST'])
 def registerCustomer():
@@ -26,7 +22,7 @@ def registerCustomer():
     return jsonify(response)
 
 #function/route to restaurant customer
-@app.route('/register_restaurant', methods=['POST'])
+@app.route('/register_restaurant', methods=['GET', 'POST'])
 def register_Customer():
     data = request.get_json()
 
@@ -41,9 +37,20 @@ def register_Customer():
         response = {'status': 'error', 'message': 'Restaurant name already exists. Please choose a different username.'}
     return jsonify(response)
 
-@app.route('/login')
+@app.route('/login', methods = ['GET', 'POST'])
 def login():
-    return "Welcome to the login page!"  # will be replaced by login page 
+    data = request.get_json()
+
+    username = data.get('username')
+    password = data.get('password')
+
+    if DBfuncs.loginCustomerCheck(username, password) is not False:
+        response = {'status': 'success', 'message': 'Logged in as Customer. Redirecting to restaurant list.'}
+    elif DBfuncs.loginRestaurantCheck(username, password) is not False:
+        response = {'status': 'success', 'message': 'Logged in as Restaurant. Redirecting to editor page.'}
+    else:
+        response = {'status': 'error', 'message': 'Check your username and password.'}
+    return jsonify(response) 
 
 if __name__ == '__main__':
     app.run(debug=True)
