@@ -37,23 +37,22 @@ class DBfuncs:
         con.close()
         return response
 
-        
-
     #Restaurant registration to the DB
     def registerRestaurant(res_name, address, postcode, password, img_path = None):
         con = sql.connect('database.db')
         cur = con.cursor()
+        response = False
         sqlite_insert_blob_query = """ INSERT INTO restaurants
                                   (res_name, address, postcode, password, picture) VALUES (?, ?, ?, ?, ?)"""
         data_tuple = (res_name, address, postcode, password, img_path)
         cur.execute("SELECT EXISTS (SELECT * FROM restaurants WHERE res_name=?)", (res_name,))
         result = cur.fetchone()[0]
-        if bool(result):
-            print("Restaurant name already exists. Please choose a different name.")
-        else:
+        if not bool(result):
             cur.execute(sqlite_insert_blob_query, data_tuple)
+            response = True
         con.commit()
         con.close()
+        return response
 
     #Credentials check for customer login
     def loginCustomerCheck(username, password):

@@ -7,8 +7,9 @@ app = Flask(__name__)
 def index():
     return "Welcome to the Flask App!" # will be replaced by home page 
 
-@app.route('/register', methods=['POST'])
-def register_Customer():
+#function/route to register customer
+@app.route('/register_customer', methods=['POST'])
+def registerCustomer():
     data = request.get_json()
 
     surname = data.get('surname')
@@ -22,6 +23,22 @@ def register_Customer():
         response = {'status': 'success', 'message': 'Registration successful. Redirecting to login page.'}
     else:
         response = {'status': 'error', 'message': 'Username already exists. Please choose a different username.'}
+    return jsonify(response)
+
+#function/route to restaurant customer
+@app.route('/register_restaurant', methods=['POST'])
+def register_Customer():
+    data = request.get_json()
+
+    res_name = data.get('res_name')
+    address = data.get('address')
+    postcode = data.get('postcode')
+    password = data.get('password')
+
+    if DBfuncs.registerRestaurant(res_name, address, postcode, password) is not False:
+        response = {'status': 'success', 'message': 'Registration successful. Redirecting to login page.'}
+    else:
+        response = {'status': 'error', 'message': 'Restaurant name already exists. Please choose a different username.'}
     return jsonify(response)
 
 @app.route('/login')
