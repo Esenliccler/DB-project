@@ -1,5 +1,11 @@
 import { NgIf } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  OnInit,
+  WritableSignal,
+  signal,
+} from '@angular/core';
 import {
   FormGroup,
   FormControl,
@@ -9,7 +15,7 @@ import {
 import { FormBuilder } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { Observable, catchError, of, take, tap } from 'rxjs';
+import { Observable, catchError, map, of, take, tap } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +28,7 @@ import { Observable, catchError, of, take, tap } from 'rxjs';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   show: boolean = false;
+  loadingButton: WritableSignal<boolean> = signal(false);
 
   constructor(
     private readonly _fb: FormBuilder,
@@ -50,23 +57,20 @@ export class LoginComponent implements OnInit {
   }
   public login(): void {
     this._authService
-      .login(this.loginForm.value['email'], this.loginForm.value['password'])
+      .login(this.loginForm.value)
       .pipe(
         take(1),
-        tap((authResponse) => {
-          localStorage.setItem(
-            'lieferspatz-user',
-            JSON.stringify(authResponse)
-          );
-          //this.loadingButton.set(false);
-          this._router.navigate(['home']);
-        }),
+
         catchError((error: any): Observable<any> => {
           //this.errorMessage.set(error.error.message);
-          //this.loadingButton.set(false);
+          this.loadingButton.set(false);
           return of({});
         })
       )
-      .subscribe();
+      .subscribe((authResponse) => {
+        localStorage.setItem('lieferspatz-user', JSON.stringify(authResponse));
+        this.loadingButton.set(false);
+        this._router.navigate(['home']);
+      });
   }
 }

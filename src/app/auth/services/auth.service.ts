@@ -1,3 +1,4 @@
+import { SignUpComponent } from './../components/sign-up/sign-up.component';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -9,15 +10,23 @@ export class AuthService {
 
   constructor(private readonly _http: HttpClient) {}
 
-  public login(
-    email: string,
-    password: string
-  ): Observable<{ userName: string; token: string }> {
-    const body = { email: email, password: password };
+  public login(data: any) {
     this._http.post<any>(
       `${environment.CURRENT_DOMAIN}${this.AUTH_ENDPOINTS.login}`,
-      body
+      data
     );
     return of({ userName: 'fadi', token: '1234' });
+  }
+  public signUpCustomer(data: any) {
+    return this._http.post<any>(
+      `${environment.CURRENT_DOMAIN}${this.AUTH_ENDPOINTS.signUp}`,
+      data
+    );
+  }
+  public signUpRestaurant(data: any) {
+    return this._http.post<any>(
+      `${environment.CURRENT_DOMAIN}${this.AUTH_ENDPOINTS.signUp}`,
+      data
+    );
   }
 }

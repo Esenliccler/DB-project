@@ -1,148 +1,346 @@
-<div class="login-page-container d-flex">
-  <div
-    class="login-card d-flex flex-column justify-content-center align-items-center"
-  >
-    <!-- FORM CARD -->
-    <form
-      class="login-main flex-1 d-flex flex-column justify-content-evenly"
-      [formGroup]="signUpForm"
+<div class="flex-sign-up-container">
+  <div class="login-page-container d-flex">
+    <div
+      class="login-card d-flex flex-column justify-content-center align-items-center"
     >
-      <!-- TITLE -->
-      <h4>Create New Account</h4>
-      <a href="/login">If you have an account -> Login</a>
+      <!-- FORM CARD -->
+      <form
+        class="login-main flex-1 d-flex flex-column justify-content-evenly"
+        [formGroup]="signUpFormRestaurant"
+      >
+        <!-- TITLE -->
+        <h4>Create New Account (Restaurant)</h4>
+        <div class="d-flex justify-content-evenly gap-075rem">
+          <!-- name input -->
+          <div class="form-group flex-1">
+            <label for="restaurantName" class="col-form-label">Restaurant name</label>
+            <input
+              class="form-control"
+              type="text"
+              required=""
+              id="restaurantName"
+              placeholder="Restaurant name..."
+              formControlName="name"
+            />
+          </div>
 
-      <div class="d-flex justify-content-evenly gap-075rem">
-        <!-- name input -->
-        <div class="form-group flex-1">
-          <label for="firstName" class="col-form-label">First name</label>
+
+        </div>
+
+        <!-- EMAIL input -->
+        <div class="form-group">
+          <label for="email" class="col-form-label">Email Address</label>
+          <input
+            class="form-control"
+            type="email"
+            required=""
+            id="email"
+            placeholder="YourEmail@gmail.com"
+            formControlName="email"
+          />
+        </div>
+        <!-- STR + NMR input -->
+        <div class="form-group">
+          <label for="str" class="col-form-label">STR + NMR</label>
           <input
             class="form-control"
             type="text"
             required=""
-            id="firstName"
-            placeholder="John"
-            formControlName="name"
+            id="str"
+            placeholder="Straße + Nummer"
+            formControlName="str"
           />
         </div>
 
-        <!-- last name input -->
-        <div class="form-group flex-1">
-          <label for="lastName" class="col-form-label">Last name</label>
+        <!-- POSTZAHL input -->
+        <div class="form-group">
+          <label for="plz" class="col-form-label">Postzahl</label>
           <input
             class="form-control"
             type="text"
             required=""
-            id="lastName"
-            placeholder="Doe"
-            formControlName="lastName"
+            id="plz"
+            placeholder="00000"
+            formControlName="plz"
           />
         </div>
-      </div>
 
-      <!-- EMAIL input -->
-      <div class="form-group">
-        <label for="email" class="col-form-label">Email Address</label>
-        <input
-          class="form-control"
-          type="email"
-          required=""
-          id="email"
-          placeholder="YourEmail@gmail.com"
-          formControlName="email"
-        />
-      </div>
-
-      <!-- PASSWORD INPUT -->
-      <div class="form-group">
-        <label for="password" class="col-form-label">Password</label>
-        <span class="p-input-icon-right">
-          <i
-            class="pi pi-eye"
-            (click)="showPassword()"
-            (keydown.enter)="showPassword()"
-            *ngIf="!show"
-            tabindex="0"
-            role="button"
-            aria-label="Show/Hide Password"
-          ></i>
-          <i
-            class="pi pi-eye-slash"
-            (click)="showPassword()"
-            (keydown.enter)="showPassword()"
-            *ngIf="show"
-            tabindex="0"
-            role="button"
-            aria-label="Show/Hide Password"
-          ></i>
-          <input
-            class="form-control"
-            [type]="show ? 'text' : 'password'"
-            pInputText
-            formControlName="password"
-            id="password"
-            required=""
-            placeholder="*********"
-          />
-        </span>
-      </div>
-
-      <!-- PASSWORD INPUT -->
-      <div class="form-group">
-        <label for="confirm" class="col-form-label">Confirm Password</label>
-        <span class="p-input-icon-right">
-          <i
-            class="pi pi-eye"
-            (click)="showPassword()"
-            (keydown.enter)="showPassword()"
-            *ngIf="!show"
-            tabindex="0"
-            role="button"
-            aria-label="Show/Hide Password"
-          ></i>
-          <i
-            class="pi pi-eye-slash"
-            (click)="showPassword()"
-            (keydown.enter)="showPassword()"
-            *ngIf="show"
-            tabindex="0"
-            role="button"
-            aria-label="Show/Hide Password"
-          ></i>
-          <input
-            class="form-control"
-            [type]="show ? 'text' : 'password'"
-            pInputText
-            formControlName="confirm"
-            id="confirm"
-            required=""
-            placeholder="*********"
-          />
-        </span>
-      </div>
-
-      <!-- Sign up BUTTON -->
-      <div class="form-group mb-0">
-        <div class="text-end mt-3">
-          <button
-            class="d-flex justify-content-center btn-primary d-block w-100 blue-bg gap-1rem"
-            [disabled]="
-              !signUpForm.valid ||
-              this.getSignUpFormControlValue('password') !==
-                this.getSignUpFormControlValue('confirm') ||
-              this.loadingButton()
-            "
-            (click)="signUp()"
-            type="button"
-          >
-            <span>Sign Up</span>
-            <i class="pi pi-spin pi-spinner" *ngIf="this.loadingButton()"></i>
-          </button>
+        <!-- PASSWORD INPUT -->
+        <div class="form-group">
+          <label for="password" class="col-form-label">Password</label>
+          <span class="p-input-icon-right">
+            <i
+              class="pi pi-eye"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="!show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <i
+              class="pi pi-eye-slash"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <input
+              class="form-control"
+              [type]="show ? 'text' : 'password'"
+              pInputText
+              formControlName="password"
+              id="password"
+              required=""
+              placeholder="*********"
+            />
+          </span>
         </div>
-      </div>
 
-      <span class="error" *ngIf="this.errorMessage()">{{
-        this.errorMessage()
-      }}</span>
-    </form>
+        <!-- PASSWORD INPUT -->
+        <div class="form-group">
+          <label for="confirm" class="col-form-label">Confirm Password</label>
+          <span class="p-input-icon-right">
+            <i
+              class="pi pi-eye"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="!show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <i
+              class="pi pi-eye-slash"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <input
+              class="form-control"
+              [type]="show ? 'text' : 'password'"
+              pInputText
+              formControlName="confirm"
+              id="confirm"
+              required=""
+              placeholder="*********"
+            />
+          </span>
+        </div>
+        <a href="/login">Already have an account? Login!</a>
+
+
+        <!-- Sign up BUTTON -->
+        <div class="form-group mb-0">
+          <div class="text-end mt-3">
+            <button
+              class="d-flex justify-content-center btn-primary d-block w-100 blue-bg gap-1rem"
+              [disabled]="!signUpFormRestaurant.valid || this.loadingButton()"
+              (click)="signUpRestaurant()"
+              type="button"
+            >
+              <span>Sign Up</span>
+              <i class="pi pi-spin pi-spinner" *ngIf="this.loadingButton()"></i>
+            </button>
+          </div>
+        </div>
+
+        <span class="error" *ngIf="this.errorMessage()">{{
+          this.errorMessage()
+        }}</span>
+      </form>
+    </div>
+  </div>
+
+   <!-- LOGO -->
+
+   <div>
+    <a class="logo" routerLink="/">
+      <img
+        class="img-fluid for-light"
+        src="assets/logo.png"
+        alt="login page"
+        defer
+      />
+    </a>
+  </div>
+
+  <!-- CUSTOMER SIGN-UP -->
+  <div class="login-page-container d-flex">
+    <div
+      class="login-card d-flex flex-column justify-content-center align-items-center"
+    >
+      <!-- FORM CARD -->
+      <form
+        class="login-main flex-1 d-flex flex-column justify-content-evenly"
+        [formGroup]="signUpFormCustomer"
+      >
+        <!-- TITLE -->
+        <h4>Create New Account (Customer)</h4>
+
+        <div class="d-flex justify-content-evenly gap-075rem">
+          <!-- name input -->
+          <div class="form-group flex-1">
+            <label for="firstName" class="col-form-label">First name</label>
+            <input
+              class="form-control"
+              type="text"
+              required=""
+              id="firstName"
+              placeholder="John"
+              formControlName="name"
+            />
+          </div>
+
+          <!-- last name input -->
+          <div class="form-group flex-1">
+            <label for="lastName" class="col-form-label">Last name</label>
+            <input
+              class="form-control"
+              type="text"
+              required=""
+              id="lastName"
+              placeholder="Doe"
+              formControlName="lastName"
+            />
+          </div>
+        </div>
+
+        <!-- EMAIL input -->
+        <div class="form-group">
+          <label for="email" class="col-form-label">Email Address</label>
+          <input
+            class="form-control"
+            type="email"
+            required=""
+            id="email"
+            placeholder="YourEmail@gmail.com"
+            formControlName="email"
+          />
+        </div>
+        <!-- STR + NMR input -->
+        <div class="form-group">
+          <label for="str" class="col-form-label">STR + NMR</label>
+          <input
+            class="form-control"
+            type="text"
+            required=""
+            id="str"
+            placeholder="Straße + Nummer"
+            formControlName="str"
+          />
+        </div>
+
+        <!-- POSTZAHL input -->
+        <div class="form-group">
+          <label for="plz" class="col-form-label">Postzahl</label>
+          <input
+            class="form-control"
+            type="text"
+            required=""
+            id="plz"
+            placeholder="00000"
+            formControlName="plz"
+          />
+        </div>
+
+        <!-- PASSWORD INPUT -->
+        <div class="form-group">
+          <label for="password" class="col-form-label">Password</label>
+          <span class="p-input-icon-right">
+            <i
+              class="pi pi-eye"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="!show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <i
+              class="pi pi-eye-slash"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <input
+              class="form-control"
+              [type]="show ? 'text' : 'password'"
+              pInputText
+              formControlName="password"
+              id="password"
+              required=""
+              placeholder="*********"
+            />
+          </span>
+        </div>
+
+        <!-- PASSWORD INPUT -->
+        <div class="form-group">
+          <label for="confirm" class="col-form-label">Confirm Password</label>
+          <span class="p-input-icon-right">
+            <i
+              class="pi pi-eye"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="!show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <i
+              class="pi pi-eye-slash"
+              (click)="showPassword()"
+              (keydown.enter)="showPassword()"
+              *ngIf="show"
+              tabindex="0"
+              role="button"
+              aria-label="Show/Hide Password"
+            ></i>
+            <input
+              class="form-control"
+              [type]="show ? 'text' : 'password'"
+              pInputText
+              formControlName="confirm"
+              id="confirm"
+              required=""
+              placeholder="*********"
+            />
+          </span>
+        </div>
+        <a href="/login">Already have an account? Login!</a>
+
+
+        <!-- Sign up BUTTON -->
+        <div class="form-group mb-0">
+          <div class="text-end mt-3">
+            <button
+              class="d-flex justify-content-center btn-primary d-block w-100 blue-bg gap-1rem"
+              [disabled]="
+                !signUpFormCustomer.valid ||
+                this.loadingButton()
+              "
+              (click)="signUpCustomer()"
+              type="button"
+            >
+              <span>Sign Up</span>
+              <i class="pi pi-spin pi-spinner" *ngIf="this.loadingButton()"></i>
+            </button>
+          </div>
+        </div>
+
+        <span class="error" *ngIf="this.errorMessage()">{{
+          this.errorMessage()
+        }}</span>
+      </form>
+    </div>
   </div>
 </div>
