@@ -23,7 +23,7 @@ def registerCustomer():
 
 #function/route to restaurant customer
 @app.route('/register_restaurant', methods=['GET', 'POST'])
-def register_Customer():
+def registerRestaurant():
     data = request.get_json()
 
     res_name = data.get('res_name')
@@ -50,7 +50,23 @@ def login():
         response = {'status': 'success', 'message': 'Logged in as Restaurant. Redirecting to editor page.'}
     else:
         response = {'status': 'error', 'message': 'Check your username and password.'}
-    return jsonify(response) 
+    return jsonify(response)
+
+@app.route('/add_item', methods = ['GET', 'POST'])
+def addNewItem():
+    data = request.get_json()
+
+    res_name = data.get('res_name')
+    name = data.get('name')
+    ingredients = data.get('ingredients')
+    type = data.get('type')
+    price = data.get('price')
+
+    if DBfuncs.addNewItem(res_name, name, ingredients, type, price) is not False:
+        response = {'status': 'success', 'message': 'Item added successfully.'}
+    else:
+        response = {'status': 'error', 'message': 'Item addition failed.'}
+    return jsonify(response)
 
 if __name__ == '__main__':
     app.run(debug=True)

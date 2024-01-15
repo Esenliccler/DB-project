@@ -4,21 +4,30 @@ class DBfuncs:
     #Creating every table that is needed in our website's backend
     def createTables():
         con = sql.connect('database.db')
+        con.execute("PRAGMA foreign_keys = ON")
         cur = con.cursor()
         cur.execute("""CREATE TABLE IF NOT EXISTS customers (
-                surname TEXT,
-                name TEXT,
-                address TEXT,
-                postcode INTEGER,
-                username TEXT,
-                password TEXT                      
+                surname TEXT NOT NULL,
+                name TEXT NOT NULL,
+                address TEXT NOT NULL,
+                postcode INTEGER NOT NULL,
+                username TEXT PRIMARY KEY,
+                password TEXT NOT NULL                      
             )""")
         cur.execute("""CREATE TABLE IF NOT EXISTS restaurants (
-                res_name TEXT,
-                address TEXT,
-                postcode INTEGER,
-                password TEXT,
+                res_name TEXT PRIMARY KEY,
+                address TEXT NOT NULL,
+                postcode INTEGER NOT NULL,
+                password TEXT NOT NULL,
                 picture BLOB                           
+            )""")
+        cur.execute("""CREATE TABLE IF NOT EXISTS menu_items(
+                res_name TEXT NOT NULL,
+                name TEXT NOT NULL,
+                ingredients TEXT NOT NULL, 
+                type TEXT CHECK(TYPE IN('Main', 'Side', 'Desert', 'Drink')) NOT NULL,
+                price INTEGER NOT NULL,
+                FOREIGN KEY(res_name) REFERENCES restaurants(res_name)       
             )""")
         con.commit()
         con.close()
@@ -71,17 +80,34 @@ class DBfuncs:
         result = cur.fetchone()[0]  
         con.close()
         return True if bool(result) == True else False  
+    
+    #Adding menu item to Restaurant Menu
+    def addNewItem(res_name, name, ingredients, type, price):
+        try:
+            con = sql.connect('database.db')
+            con.execute("PRAGMA foreign_keys = ON")
+            cur = con.cursor() 
+            cur.execute("INSERT INTO menu_items VALUES (?, ?, ?, ?, ?)", (res_name, name, ingredients, type, price))
+            con.commit()
+            con.close()
+            return True
+        except sql.Error as Err:
+            print("SQLite Error: ", Err)
+            return False
 
 # if __name__ == "__main__":
 #     DBfuncs.createTables()
-#     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
-#     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz1", 1234554321)
-#     DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
-#     DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321, "C:/Users/KaradenizNB/Desktop/abc.png")
-#     DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321)
-#     print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554321))
-#     print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554322))
-#     print(DBfuncs.loginCustomerCheck('Utku', 1234554321))
-#     print(DBfuncs.loginRestaurantCheck('Al-Basha2', 123321))
-#     print(DBfuncs.loginRestaurantCheck('Umut_Karadeniz', 1234554322))
-#     print(DBfuncs.loginRestaurantCheck('Utku', 1234554321))
+    # DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
+    # DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz1", 1234554321)
+    # DBfuncs.registerCustomer("Karadeniz2", "Umut", "ABC 6", 47055, "Umut_Karadeniz", 1234554321)
+    # DBfuncs.registerRestaurant("Al-Basha1", "ABC 7", 47055, 123321, "C:/Users/KaradenizNB/Desktop/abc.png")
+    # DBfuncs.registerRestaurant("Al-Basha2", "ABC 7", 47055, 123321)
+    # print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554321))
+    # print(DBfuncs.loginCustomerCheck('Umut_Karadeniz', 1234554322))
+    # print(DBfuncs.loginCustomerCheck('Utku', 1234554321))
+    # print(DBfuncs.loginRestaurantCheck('Al-Basha2', 123321))
+    # print(DBfuncs.loginRestaurantCheck('Umut_Karadeniz', 1234554322))
+    # print(DBfuncs.loginRestaurantCheck('Utku', 1234554321))
+    # DBfuncs.addNewItem("Al-Basha1", "pizza", "tomato", "Main", 15)
+    # DBfuncs.addNewItem("Al-Basha2", "hamburger", "meat", "Main", 20)
+    # DBfuncs.addNewItem("Al-Basha3", "pizza", "tomato", "Main", 15)
