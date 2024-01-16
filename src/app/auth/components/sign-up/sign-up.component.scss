@@ -7,7 +7,6 @@
   height: 100%;
   overflow: hidden;
   justify-content: flex-start;
-  background-image: url("/assets/images/login/login-bg.png");
   background-size: 100% 100%;
 }
 
@@ -75,10 +74,16 @@ p {
   padding: 0.5rem 4rem;
   font-size: 1rem;
   color: var(--F3-white);
-}
+    border-color: var(--primary) !important;
+    gap: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
 
 .blue-bg:disabled {
-  background-color: #188ac050 !important;
+  background-color: #00515180 !important;
 }
 
 .show-hide {

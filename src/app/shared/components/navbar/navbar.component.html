@@ -1,0 +1,24 @@
+<div
+  class="header d-flex justify-content-between w-100 align-items-center z-index-1"
+>
+  <div class="d-flex align-items-center gap-1rem">
+    <img class="avatar-border" [src]="profileImg" alt="user picture" />
+    <h4 class="my-fs-30px">{{ pageTitleSignal() }}</h4>
+  </div>
+
+  <div
+    class="profile-media d-flex align-items-center"
+    (click)="toggleDropdown()"
+    (keydown.enter)="toggleDropdown()"
+    tabindex="0"
+  >
+    <span>{{ userName }}</span>
+    <i class="pi pi-power-off red-icon"></i>
+
+    <ul #dropdownList>
+      <li (click)="logout()" (keyup.enter)="logout()" tabindex="0">
+        <i class="pi pi-sign-out red-icon"></i><span>Log out</span>
+      </li>
+    </ul>
+  </div>
+</div>

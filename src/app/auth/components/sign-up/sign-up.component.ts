@@ -1,5 +1,5 @@
 import { InputTextModule } from 'primeng/inputtext';
-import { catchError, Observable, of, take, tap } from 'rxjs';
+import { take, tap } from 'rxjs';
 
 import { NgIf } from '@angular/common';
 import {
@@ -9,9 +9,7 @@ import {
   WritableSignal,
 } from '@angular/core';
 import {
-  AbstractControl,
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   ValidatorFn,
@@ -19,15 +17,6 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-
-// import { AuthResponseAdapter } from 'src/app/adapters/auth/auth.adapter';
-// import { SignUpDTO } from 'src/app/DTOs/auth/sign-up.dto';
-// import { AuthResponseModel } from 'src/app/models/auth-models/auth-response.model';
-// import { GroupService } from 'src/app/shared/services/group.service';
-// import { Gender } from 'src/types/types';
-
-// import { AuthService } from '../services/auth.service';
-
 @Component({
   selector: 'sign-up',
   standalone: true,
@@ -68,7 +57,7 @@ export class SignUpComponent {
   constructor(
     private readonly _fb: FormBuilder,
     private readonly _router: Router,
-    private readonly _authService: AuthService // private readonly _groupService: GroupService,
+    private readonly _authService: AuthService
   ) {
     this.signUpFormCustomer = this._fb.nonNullable.group({
       email: this._fb.nonNullable.control<string | null>('', [
@@ -114,18 +103,58 @@ export class SignUpComponent {
       str: this._fb.nonNullable.control<string | null>('', Validators.required),
       plz: this._fb.nonNullable.control<string | null>('', Validators.required),
     });
-    localStorage.removeItem('user');
+    localStorage.removeItem('lieferspatz-user');
   }
 
   public signUpCustomer(): void {
     const { confirm, ...data } = this.signUpFormCustomer.value;
     console.log(data);
-    //this._authService.signUpCustomer(data);
+    this._authService
+      .signUpCustomer(data)
+      .pipe(
+        take(1),
+        tap(() => {
+          this._authService
+            .login({
+              email: this.signUpFormCustomer.controls['email'].value,
+              password: this.signUpFormCustomer.controls['password'].value,
+            })
+            .subscribe((authResponse) => {
+              localStorage.setItem(
+                'lieferspatz-user',
+                JSON.stringify(authResponse)
+              );
+              this.loadingButton.set(false);
+              this._router.navigate(['home']);
+            });
+        })
+      )
+      .subscribe();
   }
   public signUpRestaurant(): void {
     const { confirm, ...data } = this.signUpFormRestaurant.value;
     console.log(data);
-    //this._authService.signUpRestaurant(data);
+    this._authService
+      .signUpRestaurant(data)
+      .pipe(
+        take(1),
+        tap(() => {
+          this._authService
+            .login({
+              email: this.signUpFormRestaurant.controls['email'].value,
+              password: this.signUpFormRestaurant.controls['password'].value,
+            })
+            .subscribe((authResponse) => {
+              localStorage.setItem(
+                'lieferspatz-user',
+                JSON.stringify(authResponse)
+              );
+              this.loadingButton.set(false);
+              this._router.navigate(['home']);
+            });
+        })
+      )
+      .subscribe();
   }
 
   public showPassword(): void {

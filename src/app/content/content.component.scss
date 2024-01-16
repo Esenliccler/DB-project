@@ -1,0 +1,13 @@
+:host {
+  height: 100%;
+  display: block;
+}
+
+.page-body {
+  padding-top: 5rem !important;
+}
+
+app-navbar {
+  position: fixed;
+  top: 0;
+}
