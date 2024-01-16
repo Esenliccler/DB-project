@@ -57,12 +57,15 @@
       <!-- LOGIN BUTTON -->
       <div class="form-group mt-3">
         <button
-          class="btn btn-primary d-block w-100 blue-bg"
-          [disabled]="!loginForm.valid"
+          class="btn btn-primary w-100 blue-bg"
+          [disabled]="!loginForm.valid || loadingButton()"
           (click)="login()"
           type="button"
         >
           <span>Login</span>
+          <i class="pi pi-spin pi-spinner"
+          *ngIf="loadingButton()"
+          ></i>
         </button>
       </div>
     </form>

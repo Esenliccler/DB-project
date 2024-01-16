@@ -10,23 +10,31 @@ export class AuthService {
 
   constructor(private readonly _http: HttpClient) {}
 
-  public login(data: any) {
+  public login(data: any): Observable<{ userName: string; token: string }> {
     this._http.post<any>(
       `${environment.CURRENT_DOMAIN}${this.AUTH_ENDPOINTS.login}`,
       data
     );
     return of({ userName: 'fadi', token: '1234' });
   }
-  public signUpCustomer(data: any) {
-    return this._http.post<any>(
+
+  public signUpCustomer(
+    data: any
+  ): Observable<{ userName: string; token: string }> {
+    this._http.post<any>(
       `${environment.CURRENT_DOMAIN}${this.AUTH_ENDPOINTS.signUp}`,
       data
     );
+    return of({ userName: 'susu', token: '2213' });
   }
-  public signUpRestaurant(data: any) {
-    return this._http.post<any>(
+
+  public signUpRestaurant(
+    data: any
+  ): Observable<{ userName: string; token: string }> {
+    this._http.post<any>(
       `${environment.CURRENT_DOMAIN}${this.AUTH_ENDPOINTS.signUp}`,
       data
     );
+    return of({ userName: 'sussdsu', token: '221ds23' });
   }
 }

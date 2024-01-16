@@ -56,6 +56,7 @@ export class LoginComponent implements OnInit {
     this.show = !this.show;
   }
   public login(): void {
+    this.loadingButton.set(true);
     this._authService
       .login(this.loginForm.value)
       .pipe(
@@ -68,9 +69,14 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe((authResponse) => {
-        localStorage.setItem('lieferspatz-user', JSON.stringify(authResponse));
-        this.loadingButton.set(false);
-        this._router.navigate(['home']);
+        setTimeout(() => {
+          localStorage.setItem(
+            'lieferspatz-user',
+            JSON.stringify(authResponse)
+          );
+          this.loadingButton.set(false);
+          this._router.navigate(['home']);
+        }, 2000);
       });
   }
 }
